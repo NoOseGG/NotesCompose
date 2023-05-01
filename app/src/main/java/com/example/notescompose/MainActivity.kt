@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.notescompose.di.AppComponent
 import com.example.notescompose.di.DaggerAppComponent
+import com.example.notescompose.feature_notes.presentation.screens.FeedScreen
 import com.example.notescompose.feature_notes.presentation.screens.FeedViewModel
 import com.example.notescompose.ui.theme.NotesComposeTheme
 import javax.inject.Inject
@@ -35,13 +36,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NotesComposeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+               FeedScreen(feedViewModel = feedViewModel)
             }
         }
 
