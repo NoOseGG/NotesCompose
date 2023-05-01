@@ -3,8 +3,9 @@ package com.example.notescompose.feature_notes.data.repository
 import com.example.notescompose.feature_notes.data.data_source.NoteDao
 import com.example.notescompose.feature_notes.domain.model.Note
 import com.example.notescompose.feature_notes.domain.repository.NoteRepository
+import javax.inject.Inject
 
-class NoteRepositoryImpl(
+class NoteRepositoryImpl @Inject constructor(
     private val noteDao: NoteDao
 ) : NoteRepository {
 
