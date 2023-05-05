@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +16,8 @@ import com.example.notescompose.di.AppComponent
 import com.example.notescompose.di.DaggerAppComponent
 import com.example.notescompose.feature_notes.presentation.screens.FeedScreen
 import com.example.notescompose.feature_notes.presentation.screens.FeedViewModel
+import com.example.notescompose.feature_notes.presentation.screens.FloatingActionButtonCompose
+import com.example.notescompose.feature_notes.presentation.screens.navigation.Navigation
 import com.example.notescompose.ui.theme.NotesComposeTheme
 import javax.inject.Inject
 
@@ -35,23 +38,8 @@ class MainActivity : ComponentActivity() {
         appComponent.inject(this)
 
         setContent {
-            NotesComposeTheme {
-               FeedScreen(feedViewModel = feedViewModel)
-            }
+            Navigation(feedViewModel = feedViewModel)
         }
 
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NotesComposeTheme {
-        Greeting("Android")
     }
 }

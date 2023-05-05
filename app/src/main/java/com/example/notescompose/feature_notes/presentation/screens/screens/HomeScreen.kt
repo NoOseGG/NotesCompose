@@ -1,11 +1,10 @@
 package com.example.notescompose.feature_notes.presentation.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,21 +14,31 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.notescompose.feature_notes.data.repository.NoteRepositoryImpl
+import androidx.navigation.NavHostController
 import com.example.notescompose.feature_notes.domain.model.Note
-import com.example.notescompose.feature_notes.domain.repository.NoteRepository
-import com.example.notescompose.feature_notes.domain.use_case.GetNotesUseCase
+import com.example.notescompose.feature_notes.presentation.screens.navigation.Screen
 
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun HomeScreen(feedViewModel: FeedViewModel, navController: NavHostController) {
+
+    Scaffold(
+        floatingActionButton = { FloatingActionButtonCompose(navController = navController)},
+        floatingActionButtonPosition = FabPosition.End
+    ) {
+
+        FeedScreen(feedViewModel = feedViewModel, navController = navController)
+    }
+}
 @Composable
 fun FeedScreen(
     modifier: Modifier = Modifier,
-    feedViewModel: FeedViewModel
+    feedViewModel: FeedViewModel,
+    navController: NavHostController
 ) {
 
     val notes = feedViewModel.notes.collectAsState(initial = listOf()).value
@@ -37,26 +46,7 @@ fun FeedScreen(
     Box(modifier = modifier.fillMaxSize()) {
         MyListNote(modifier = modifier, notes = notes)
 
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(20.dp),
-            contentAlignment = Alignment.BottomEnd,
-
-        ) {
-            FloatingActionButton(
-                onClick = { /*TODO*/ },
-                contentColor = Color.White,
-                backgroundColor = Color.Cyan
-            ) {
-                Icon(Icons.Filled.Add, contentDescription = null)
-            }
-        }
     }
-
-
-    MyListNote(modifier = modifier, notes = notes)
-
 }
 
 @Composable
@@ -104,5 +94,19 @@ fun MyItemRow(
             Spacer(modifier = modifier.height(6.dp))
             Text(text = note.content)
         }
+    }
+}
+
+@Composable
+fun FloatingActionButtonCompose(navController: NavHostController) {
+    FloatingActionButton(
+        onClick = {
+            navController.navigate(Screen.AddEditScreen.route)
+            println("Floating button clicked")
+        },
+        contentColor = Color.White,
+        backgroundColor = Color.Cyan
+    ) {
+        Icon(Icons.Filled.Add, contentDescription = null)
     }
 }
